@@ -1,9 +1,6 @@
-import java.util.ArrayList;
-import java.util.Collections;
-
 public class Main {
     public static void main(String[] args) {
-        int[] puzzle = {
+/*      int[] puzzle = {
                 1,2,4,
                 3,0,5,
                 7,6,8
@@ -22,5 +19,9 @@ public class Main {
         } else {
             System.out.println("No path to the solution was found.");
         }
+*/
+
+    IOHandler io = new IOHandler();
+    io.readFile("Files/boards.txt");
     }
 }
