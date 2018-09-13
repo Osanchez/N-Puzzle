@@ -27,6 +27,7 @@ public class Uninformed {
             for(int i = 0; i < currentNode.children.size(); i++) {
                 Node currentChild = currentNode.children.get(i);
                 if(currentChild.isGoalNode()) {
+                    System.out.println();
                     System.out.println("Goal Found!");
                     goal = true;
                     pathTrace(pathToSolution, currentChild);

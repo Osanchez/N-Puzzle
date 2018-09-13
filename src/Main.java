@@ -1,12 +1,15 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class Main {
     public static void main(String[] args) {
-/*      int[] puzzle = {
-                1,2,4,
-                3,0,5,
-                7,6,8
-        };
 
-        Node rootNode = new Node(puzzle);
+    IOHandler io = new IOHandler();
+    io.readFile("Files/boards.txt");
+    ArrayList<int[]> boards = io.finalizedBoards;
+
+    for(int[] board: boards) {
+        Node rootNode = new Node(board);
         Uninformed ui = new Uninformed();
 
         ArrayList<Node> solution = ui.breadthFirstSeach(rootNode);
@@ -19,9 +22,8 @@ public class Main {
         } else {
             System.out.println("No path to the solution was found.");
         }
-*/
+    }
 
-    IOHandler io = new IOHandler();
-    io.readFile("Files/boards.txt");
+
     }
 }

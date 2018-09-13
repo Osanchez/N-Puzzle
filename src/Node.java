@@ -136,7 +136,11 @@ public class Node {
         int m = 0;
         for(int i = 0; i < columnSize; i++) { //column
             for(int j = 0; j < columnSize; j++) { //row
-                System.out.print(puzzle[m] + " ");
+                if(puzzle[m] == 0) {
+                    System.out.print("." + " ");
+                } else {
+                    System.out.print(puzzle[m] + " ");
+                }
                 m++;
             }
             System.out.println();
