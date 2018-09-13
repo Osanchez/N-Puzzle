@@ -6,8 +6,6 @@ public class IOHandler {
     public ArrayList<int[]> finalizedBoards = new ArrayList<>();
 
     public void readFile(String filePath) {
-
-        //TODO: Bug: Read last board of file
         try {
             File file = new File(filePath); //Pathname
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -28,7 +26,8 @@ public class IOHandler {
                     for(String boardPiece: boardLines.get(x)) {
                         board.add(Integer.parseInt(boardPiece));
                     }
-                } else {
+                }
+                if (boardLines.get(x).length == 1 || x == boardLines.size() - 1){ //ensures last board of file is read
                     int[] finalBoard = new int[board.size()];
                     for(int y = 0; y < board.size(); y++) {
                         finalBoard[y] = board.get(y);
