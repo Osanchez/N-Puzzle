@@ -10,7 +10,7 @@ public class Uninformed {
     public ArrayList<Node> breadthFirstSeach(Node root) {
         ArrayList pathToSolution = new ArrayList();
         ArrayList<Node> openList = new ArrayList();
-        ArrayList<Node> closedList = new ArrayList();
+        ArrayList closedList = new ArrayList();
 
         openList.add(root);
         boolean goal = false;
@@ -21,7 +21,8 @@ public class Uninformed {
             openList.remove(0);
 
             currentNode.expandMove();
-            //TODO: Debugging
+
+            //TODO: Debug
             //currentNode.printPuzzle();
 
             for(int i = 0; i < currentNode.children.size(); i++) {

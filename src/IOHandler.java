@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class IOHandler {
     public ArrayList<int[]> finalizedBoards = new ArrayList<>();
@@ -38,9 +39,9 @@ public class IOHandler {
 
             br.close();
 
-            //for(int[] aBoard: finalizedBoards) {
-            //    System.out.println(Arrays.toString(aBoard));
-            //}
+            for(int[] aBoard: finalizedBoards) {
+                System.out.println(Arrays.toString(aBoard));
+            }
 
             System.out.println();
         } catch (IOException e) {

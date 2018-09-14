@@ -20,7 +20,7 @@ public class Main {
                 solution.get(i).printPuzzle();
             }
         } else {
-            System.out.println("No path to the solution was found.");
+            System.out.println("No Solution.");
         }
     }
 

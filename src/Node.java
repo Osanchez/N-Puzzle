@@ -1,22 +1,27 @@
+//TODO: incorporate 4x4 and 5x5 boards
 import java.util.ArrayList;
-
-/*
-Goal Node:
-1 2 3
-4 5 6
-7 8 -/0
- */
 
 public class Node {
     public ArrayList<Node> children = new ArrayList<>();
     public Node parent;
-    public int[] puzzle = new int[9];
+    public int[] puzzle;
     public int emptySpot;
-
-    public int columnSize = 3;
+    public int columnSize;
 
     public Node(int[] inputPuzzle) {
         puzzle = inputPuzzle;
+
+        if(inputPuzzle.length == 9) {
+            columnSize = 3;
+        }
+        else if(inputPuzzle.length == 16) {
+            columnSize = 4;
+        }
+        else if(inputPuzzle.length == 25) {
+            columnSize = 5;
+        } else {
+            throw new IllegalArgumentException("unrecognized number of puzzle pieces detected.");
+        }
     }
 
     //Checks if goal node has been reached.
@@ -66,11 +71,11 @@ public class Node {
 
     //Node Expansion - Up, Down, Left, Right.
     //int[] puzzle = current puzzle state
-    //int i = puzzle index
+    //int i = "." puzzle piece index
 
     public void moveLeft(int[] puzzle, int i){
         if(i % columnSize > 0) {
-            int[] puzzleCopy = new int[9];
+            int[] puzzleCopy = new int[puzzle.length];
             copyPuzzle(puzzleCopy, puzzle);
 
             int temp = puzzleCopy[i - 1];
@@ -86,7 +91,7 @@ public class Node {
 
     public void moveRight(int[] puzzle, int i){
         if(i % columnSize < columnSize - 1) {
-            int[] puzzleCopy = new int[9];
+            int[] puzzleCopy = new int[puzzle.length];
             copyPuzzle(puzzleCopy, puzzle);
 
             int temp = puzzleCopy[i + 1];
@@ -102,7 +107,7 @@ public class Node {
 
     public void moveUp(int[] puzzle, int i){
         if(i - columnSize >= 0) {
-            int[] puzzleCopy = new int[9];
+            int[] puzzleCopy = new int[puzzle.length];
             copyPuzzle(puzzleCopy, puzzle);
 
             int temp = puzzleCopy[i - 3];
@@ -117,7 +122,7 @@ public class Node {
 
     public void moveDown(int[] puzzle, int i){
         if(i + columnSize < puzzle.length) {
-            int[] puzzleCopy = new int[9];
+            int[] puzzleCopy = new int[puzzle.length];
             copyPuzzle(puzzleCopy, puzzle);
 
             int temp = puzzleCopy[i + 3];
