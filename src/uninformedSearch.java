@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
 //Breadth-First Search
-public class Uninformed {
+public class uninformedSearch {
 
-    public Uninformed() {
+    public uninformedSearch() {
 
     }
 

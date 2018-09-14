@@ -10,7 +10,7 @@ public class Main {
 
     for(int[] board: boards) {
         Node rootNode = new Node(board);
-        Uninformed ui = new Uninformed();
+        uninformedSearch ui = new uninformedSearch();
 
         ArrayList<Node> solution = ui.breadthFirstSeach(rootNode);
 

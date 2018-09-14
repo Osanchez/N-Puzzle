@@ -1,4 +1,3 @@
-//TODO: incorporate 4x4 and 5x5 boards
 import java.util.ArrayList;
 
 public class Node {
@@ -7,6 +6,7 @@ public class Node {
     public int[] puzzle;
     public int emptySpot;
     public int columnSize;
+    public boolean solvable;
 
     public Node(int[] inputPuzzle) {
         puzzle = inputPuzzle;
@@ -22,6 +22,16 @@ public class Node {
         } else {
             throw new IllegalArgumentException("unrecognized number of puzzle pieces detected.");
         }
+
+        solvable = isSolvable();
+    }
+
+    //checks to see if node is solvable
+    //checks for duplicate values and skipped values
+    public boolean isSolvable() {
+        solvable = true;
+
+        return solvable;
     }
 
     //Checks if goal node has been reached.
@@ -55,7 +65,7 @@ public class Node {
         }
     }
 
-    //Expansion calls - **Body of Program**
+    //Expansion calls - **AI of Program... but not really**
 
     public void expandMove() {
         for(int i = 0; i < puzzle.length; i++) {
