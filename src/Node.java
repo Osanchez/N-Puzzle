@@ -31,6 +31,23 @@ public class Node {
     public boolean isSolvable() {
         solvable = true;
 
+        //creates an array and initializes all value to zero (values are 0 by default)
+        int[] puzzleCopy = new int[puzzle.length];
+
+        //traverses puzzle and sets puzzleCopy[value returned] to a value of 1.
+        for(int i = 0; i < puzzle.length; i++) {
+           puzzleCopy[puzzle[i]] = 1;
+        }
+
+        //if there are any 0's in the copy array than there are missing or duplicate values in the puzzle and it
+        //is not solvable
+
+        for(int i = 0; i < puzzle.length; i++) {
+            if(puzzleCopy[i] == 0) {
+                solvable = false;
+            }
+        }
+
         return solvable;
     }
 

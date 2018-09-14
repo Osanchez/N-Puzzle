@@ -20,6 +20,7 @@ public class Main {
                 solution.get(i).printPuzzle();
             }
         } else {
+            System.out.println();
             System.out.println("No Solution.");
         }
     }

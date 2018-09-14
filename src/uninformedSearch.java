@@ -14,8 +14,9 @@ public class uninformedSearch {
 
         openList.add(root);
         boolean goal = false;
+        boolean solvable = root.solvable;
 
-        while(!openList.isEmpty() && !goal) {
+        while(!openList.isEmpty() && !goal && solvable) {
             Node currentNode = openList.get(0);
             closedList.add(currentNode);
             openList.remove(0);
@@ -39,6 +40,7 @@ public class uninformedSearch {
 
             }
         }
+
         return pathToSolution;
     }
 
