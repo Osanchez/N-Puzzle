@@ -30,7 +30,8 @@ public class AStarSearch {
 
             //gets the lowest costing node from the frontier
             for(Node node : openList) {
-                node.f = node.h + node.calculatePathCost(root.puzzle);
+                node.g = node.calculatePathCost(root.puzzle);
+                node.f = node.h + node.g;
                 if(node.f <= minInt) {
                     minInt = node.f;
                     currentNode = node;
@@ -107,7 +108,8 @@ public class AStarSearch {
                 Collections.reverse(solution);
                 for (int i = 0; i < solution.size(); i++) {
                     solution.get(i).printPuzzle();
-                    System.out.println("Path Cost: " + solution.get(i).g);
+                    //System.out.println("Path Cost: " + solution.get(i).f);
+
                 }
             } else {
                 System.out.println();
