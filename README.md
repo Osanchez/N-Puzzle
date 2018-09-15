@@ -1,5 +1,5 @@
 # N-Puzzle
-Breadth-First Search and A* Algorithm on 3x3 puzzle board
+Breadth-First Search and A* Algorithm on 3x3, 4x4, and 5x5 + puzzle boards
 
 # Assignment
 Solving the N-puzzle Problem with Search
