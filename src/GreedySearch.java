@@ -1,15 +1,17 @@
+//TODO:Debug Me Please - Issue most likely related to Heuristic function calculations
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class AStarSearch {
+public class GreedySearch {
+
     public int addedToFrontier = 0;
     public int expandedFromFrontier = 0;
 
-    public AStarSearch() {
+    public GreedySearch() {
 
     }
 
-    public ArrayList<Node> AStarSearch(Node root) {
+    public ArrayList<Node> GreedySearch(Node root) {
 
         ArrayList pathToSolution = new ArrayList();
         ArrayList<Node> openList = new ArrayList();
@@ -97,8 +99,8 @@ public class AStarSearch {
 
         for (int[] board : boards) {
             Node rootNode = new Node(board);
-            AStarSearch as = new AStarSearch();
-            ArrayList<Node> solution = as.AStarSearch(rootNode);
+            GreedySearch gs = new GreedySearch();
+            ArrayList<Node> solution = gs.GreedySearch(rootNode);
             //System.out.println(rootNode.h);
 
             if(solution.size() > 0) {
@@ -112,12 +114,12 @@ public class AStarSearch {
             }
             //print metric data
             System.out.println();
-            System.out.println("total nodes added to frontier: " + as.addedToFrontier);
-            System.out.println("total nodes expanded from frontier: " + as.expandedFromFrontier);
+            System.out.println("total nodes added to frontier: " + gs.addedToFrontier);
+            System.out.println("total nodes expanded from frontier: " + gs.expandedFromFrontier);
 
             //reset metric data
-            as.addedToFrontier = 0;
-            as.expandedFromFrontier = 0;
+            gs.addedToFrontier = 0;
+            gs.expandedFromFrontier = 0;
         }
 
     }
