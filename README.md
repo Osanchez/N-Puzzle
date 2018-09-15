@@ -14,5 +14,5 @@ moves may be available).
 Your solver must take a start state as input, and
 perform a search over the state space, and return a
 solution (when possible). In addition, your program will track the efficiency of the search
-process and report back performance metrics (more details below).
+process and report back performance metrics.
 
