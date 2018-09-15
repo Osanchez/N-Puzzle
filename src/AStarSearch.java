@@ -54,7 +54,6 @@ public class AStarSearch {
                 if(currentChild.isGoalNode()) {
                     goal = true;
                     pathTrace(pathToSolution, currentChild);
-                    System.out.println();
                     System.out.println("Goal Found!");
                 }
 
@@ -108,12 +107,19 @@ public class AStarSearch {
                 Collections.reverse(solution);
                 for (int i = 0; i < solution.size(); i++) {
                     solution.get(i).printPuzzle();
-                    System.out.println("Cost: " + solution.get(i).f);
                 }
             } else {
                 System.out.println();
                 System.out.println("No Solution.");
             }
+            //print metric data
+            System.out.println();
+            System.out.println("total nodes added to frontier: " + as.addedToFrontier);
+            System.out.println("total nodes expanded from frontier: " + as.expandedFromFrontier);
+
+            //reset metric data
+            as.addedToFrontier = 0;
+            as.expandedFromFrontier = 0;
         }
 
     }

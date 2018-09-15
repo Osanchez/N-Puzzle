@@ -29,16 +29,17 @@ public class Node {
         }
 
         solvable = isSolvable();
-        manhattanDistance();
     }
 
+
     public int calculateCost() {
-        f = g + h;
-        return f;
+        calculateManhattanDistance();
+        this.f = this.g + this.h;
+        return this.f;
     }
 
     //calculates manhattan Distance
-    public void manhattanDistance() {
+    public void calculateManhattanDistance() {
         int[][] copyBoard = new int[columnSize][columnSize];
         int[] goalState = new int[2];
 
@@ -63,7 +64,7 @@ public class Node {
                 }
             }
         }
-        h = mDistance;
+        this.h = mDistance;
     }
 
     //checks to see if node is solvable
