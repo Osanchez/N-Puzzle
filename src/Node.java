@@ -10,7 +10,11 @@ public class Node {
 
     //greedy best first search
     //f(n) = h(n)
+    //A* best first search
+    //f(n) = g(n) + h(n)
+    public int f;
     public int h; //h = heuristics
+    public int g; //g = cost from root node to current node
 
     public Node(int[] inputPuzzle) {
         puzzle = inputPuzzle;
@@ -29,6 +33,52 @@ public class Node {
 
         solvable = isSolvable();
         h = calculateManhattanDistance();
+    }
+
+    //calculates cost from start node to current node
+    public int calculatePathCost(int[] startPuzzle) {
+        int cost = 0;
+        int boardPiece = 0;
+        int[] pCords = new int[2];
+        int[] cCords = new int[2];
+
+        int[][] startCopy = new int[columnSize][columnSize];//this.parent.puzzle;
+        int[][] childCopy = new int[columnSize][columnSize];//this.puzzle;
+
+        if(isSamePuzzle(startPuzzle)) {
+            return cost;
+        }
+
+        //populates 2d boards with values of each puzzle
+        for(int i = 0; i < columnSize; i++) {
+            for(int j = 0; j < columnSize; j++) {
+                startCopy[i][j] = startPuzzle[boardPiece];
+                childCopy[i][j] = this.puzzle[boardPiece];
+                boardPiece++;
+            }
+        }
+
+        //cost calculation
+        while(boardPiece < this.puzzle.length) {
+         for(int x = 0; x < columnSize; x++) {
+             for(int y = 0; y < columnSize; y++) {
+                if(startCopy[x][y] == boardPiece) {
+                    pCords[0] = x;
+                    pCords[1] = y;
+                }
+                 if(childCopy[x][y] == boardPiece) {
+                     cCords[0] = x;
+                     cCords[1] = y;
+                 }
+             }
+         }
+            cost += Math.abs(pCords[0] - cCords[0]);
+            cost += Math.abs(pCords[1] - cCords[1]);
+
+            boardPiece++;
+        }
+
+        return cost;
     }
 
     //calculates manhattan Distance of current node
