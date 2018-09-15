@@ -70,7 +70,7 @@ public class GreedySearch {
     }
 
     public void pathTrace(ArrayList<Node> path, Node n) {
-        System.out.println("A* Search Path");
+        System.out.println("Greedy Search Path");
         Node current = n;
         path.add(current);
 
