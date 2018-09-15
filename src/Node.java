@@ -1,3 +1,10 @@
+/*
+I cannot figure out why this puzzle is taking a long time to solve
+7 2 4
+5 . 6
+8 3 1
+ */
+
 import java.util.ArrayList;
 
 public class Node {
