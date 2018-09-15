@@ -8,6 +8,11 @@ public class Node {
     public int columnSize;
     public boolean solvable;
 
+    //f = g + h
+    public int f; //total cost
+    public int g = 0; // g = cost from root to present position
+    public int h; //h = heuristics
+
     public Node(int[] inputPuzzle) {
         puzzle = inputPuzzle;
 
@@ -24,13 +29,45 @@ public class Node {
         }
 
         solvable = isSolvable();
+        manhattanDistance();
+    }
+
+    public void calculateCost() {
+        this.f = this.g + this.h;
+    }
+
+    //calculates manhattan Distance
+    public void manhattanDistance() {
+        int mDistance = 0;
+        int boardPiece = 0;
+        int[][] copyBoard = new int[columnSize][columnSize];
+        int[] goalState = new int[2];
+
+        //populates 2d board with values of puzzle for use in manhattan distance calc.
+        for(int i = 0; i < columnSize; i++) {
+            for(int j = 0; j < columnSize; j++) {
+                copyBoard[i][j] = puzzle[boardPiece];
+                boardPiece++;
+            }
+        }
+
+        for(int i = 0; i < columnSize; i++) {
+            for(int j = 0; j < columnSize; j++) {
+                if(copyBoard[i][j] != 0) {
+                    int puzzlePiece = copyBoard[i][j];
+                    goalState[0] = puzzlePiece % columnSize; //row
+                    goalState[1] = (int) Math.floor((puzzlePiece-1)/columnSize); //column
+                    mDistance += (Math.abs(goalState[0]- j) + Math.abs(goalState[1]-i));
+                }
+            }
+        }
+        this.h = mDistance;
     }
 
     //checks to see if node is solvable
     //checks for duplicate values and skipped values
     public boolean isSolvable() {
         solvable = true;
-
         //creates an array and initializes all value to zero (values are 0 by default)
         int[] puzzleCopy = new int[puzzle.length];
 
@@ -41,11 +78,15 @@ public class Node {
 
         //if there are any 0's in the copy array than there are missing or duplicate values in the puzzle and it
         //is not solvable
-
         for(int i = 0; i < puzzle.length; i++) {
             if(puzzleCopy[i] == 0) {
                 solvable = false;
             }
+        }
+
+        //puzzle already solved because all indexes are set to 1
+        if(isGoalNode()) {
+            solvable = false;
         }
 
         return solvable;
@@ -112,6 +153,10 @@ public class Node {
             Node child = new Node(puzzleCopy);
             children.add(child);
             child.parent = this;
+
+            //A* Search Heuristic Function
+            calculateCost();
+            child.g = this.f;
         }
 
     }
@@ -128,6 +173,10 @@ public class Node {
             Node child = new Node(puzzleCopy);
             children.add(child);
             child.parent = this;
+
+            //A* Search Heuristic Function
+            calculateCost();
+            child.g = this.f;
         }
 
     }
@@ -144,6 +193,10 @@ public class Node {
             Node child = new Node(puzzleCopy);
             children.add(child);
             child.parent = this;
+
+            //A* Search Heuristic Function
+            calculateCost();
+            child.g = this.f;
         }
     }
 
@@ -159,6 +212,10 @@ public class Node {
             Node child = new Node(puzzleCopy);
             children.add(child);
             child.parent = this;
+
+            //A* Search Heuristic Function
+            calculateCost();
+            child.g = this.f;
         }
     }
 

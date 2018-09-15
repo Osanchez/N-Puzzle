@@ -1,21 +1,23 @@
+//TODO:Debug Me Please
 import java.util.ArrayList;
 import java.util.Collections;
 
-//Breadth-First Search
-public class uninformedSearch {
+public class AStarSearch {
 
     public int addedToFrontier = 0;
     public int expandedFromFrontier = 0;
 
-    public uninformedSearch() {
+    public AStarSearch() {
 
     }
 
-    public ArrayList<Node> breadthFirstSearch(Node root) {
+    public ArrayList<Node> AStarSearch(Node root) {
 
         ArrayList pathToSolution = new ArrayList();
         ArrayList<Node> openList = new ArrayList();
         ArrayList closedList = new ArrayList();
+
+        int minInt = Integer.MAX_VALUE;
 
         boolean goal = false;
         boolean solvable = root.solvable;
@@ -24,10 +26,29 @@ public class uninformedSearch {
         addedToFrontier++;
 
         while(!openList.isEmpty() && !goal && solvable) {
-            Node currentNode = openList.get(0);
-            closedList.add(currentNode);
-            openList.remove(0);
 
+            Node currentNode = null;
+
+            //gets the lowest costing node
+            for(Node node : openList) {
+                if(node.f <= minInt) {
+                    minInt = node.f;
+                    currentNode = node;
+                }
+            }
+
+            if(currentNode.h <= 0) {
+                goal = true;
+                pathTrace(pathToSolution, currentNode);
+                System.out.println();
+                System.out.println("Goal Found!");
+            }
+
+
+            closedList.add(currentNode);
+            openList.remove(currentNode);
+
+            //expand currentNode
             currentNode.expandMove();
             expandedFromFrontier++;
 
@@ -36,25 +57,29 @@ public class uninformedSearch {
 
             for(int i = 0; i < currentNode.children.size(); i++) {
                 Node currentChild = currentNode.children.get(i);
+
+                //checks if children contain goal node
                 if(currentChild.isGoalNode()) {
-                    System.out.println();
-                    System.out.println("Goal Found!");
                     goal = true;
                     pathTrace(pathToSolution, currentChild);
+                    System.out.println();
+                    System.out.println("Goal Found!");
                 }
+
+                //add the least cost child to the open list
                 if(!Contains(openList, currentChild) && !Contains(closedList, currentChild)) {
                     openList.add(currentChild);
                     addedToFrontier++;
                 }
-
             }
+
         }
 
         return pathToSolution;
     }
 
     public void pathTrace(ArrayList<Node> path, Node n) {
-        System.out.println("Breadth-First Search Path");
+        System.out.println("A* Search Path");
         Node current = n;
         path.add(current);
 
@@ -83,11 +108,11 @@ public class uninformedSearch {
 
         for (int[] board : boards) {
             Node rootNode = new Node(board);
-            uninformedSearch ui = new uninformedSearch();
+            AStarSearch as = new AStarSearch();
+            ArrayList<Node> solution = as.AStarSearch(rootNode);
+            //System.out.println(rootNode.h);
 
-            ArrayList<Node> solution = ui.breadthFirstSearch(rootNode);
-
-            if (solution.size() > 0) {
+            if(solution.size() > 0) {
                 Collections.reverse(solution);
                 for (int i = 0; i < solution.size(); i++) {
                     solution.get(i).printPuzzle();
@@ -96,17 +121,7 @@ public class uninformedSearch {
                 System.out.println();
                 System.out.println("No Solution.");
             }
-
-            //print metric data
-            System.out.println();
-            System.out.println("total nodes added to frontier: " + ui.addedToFrontier);
-            System.out.println("total nodes expanded from frontier: " + ui.expandedFromFrontier);
-
-            //reset metric data
-            ui.addedToFrontier = 0;
-            ui.expandedFromFrontier = 0;
         }
-
 
     }
 }
