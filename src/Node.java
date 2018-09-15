@@ -8,9 +8,8 @@ public class Node {
     public int columnSize;
     public boolean solvable;
 
-    //f = g + h
-    public int f; //total cost
-    public int g = 0; // g = cost from root to present position
+    //greedy best first search
+    //f(n) = h(n)
     public int h; //h = heuristics
 
     public Node(int[] inputPuzzle) {
@@ -29,17 +28,11 @@ public class Node {
         }
 
         solvable = isSolvable();
+        h = calculateManhattanDistance();
     }
 
-
-    public int calculateCost() {
-        calculateManhattanDistance();
-        this.f = this.g + this.h;
-        return this.f;
-    }
-
-    //calculates manhattan Distance
-    public void calculateManhattanDistance() {
+    //calculates manhattan Distance of current node
+    public int calculateManhattanDistance() {
         int[][] copyBoard = new int[columnSize][columnSize];
         int[] goalState = new int[2];
 
@@ -64,7 +57,7 @@ public class Node {
                 }
             }
         }
-        this.h = mDistance;
+        return mDistance;
     }
 
     //checks to see if node is solvable
@@ -154,11 +147,11 @@ public class Node {
             puzzleCopy[i] = temp;
 
             Node child = new Node(puzzleCopy);
-            children.add(child);
-            child.parent = this;
 
+            child.parent = this;
+            children.add(child);
             //A* Search Heuristic Function
-            child.g = calculateCost();
+
         }
 
     }
@@ -173,11 +166,11 @@ public class Node {
             puzzleCopy[i] = temp;
 
             Node child = new Node(puzzleCopy);
-            children.add(child);
-            child.parent = this;
 
+            child.parent = this;
+            children.add(child);
             //A* Search Heuristic Function
-            child.g = calculateCost();
+
         }
 
     }
@@ -192,11 +185,11 @@ public class Node {
             puzzleCopy[i] = temp;
 
             Node child = new Node(puzzleCopy);
-            children.add(child);
-            child.parent = this;
 
+            child.parent = this;
+            children.add(child);
             //A* Search Heuristic Function
-            child.g = calculateCost();
+
         }
     }
 
@@ -210,11 +203,11 @@ public class Node {
             puzzleCopy[i] = temp;
 
             Node child = new Node(puzzleCopy);
-            children.add(child);
-            child.parent = this;
 
+            child.parent = this;
+            children.add(child);
             //A* Search Heuristic Function
-            child.g = calculateCost();
+
         }
     }
 

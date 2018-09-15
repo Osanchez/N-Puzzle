@@ -25,20 +25,20 @@ public class AStarSearch {
         openList.add(root);
         addedToFrontier++;
 
-        while(!openList.isEmpty() && !goal && solvable) {
+        Node currentNode = null;
 
-            Node currentNode = null;
+        while(!openList.isEmpty() && !goal && solvable) {
 
             //gets the lowest costing node from the frontier
             for(Node node : openList) {
-                if(node.f <= minInt) {
-                    minInt = node.f;
+                if(node.h <= minInt) {
+                    minInt = node.h;
                     currentNode = node;
                 }
             }
 
-            closedList.add(currentNode);
             openList.remove(currentNode);
+            closedList.add(currentNode);
 
             //expand currentNode
             currentNode.expandMove();
