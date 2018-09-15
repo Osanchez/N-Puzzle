@@ -32,16 +32,18 @@ public class Node {
         manhattanDistance();
     }
 
-    public void calculateCost() {
-        this.f = this.g + this.h;
+    public int calculateCost() {
+        f = g + h;
+        return f;
     }
 
     //calculates manhattan Distance
     public void manhattanDistance() {
-        int mDistance = 0;
-        int boardPiece = 0;
         int[][] copyBoard = new int[columnSize][columnSize];
         int[] goalState = new int[2];
+
+        int mDistance = 0;
+        int boardPiece = 0;
 
         //populates 2d board with values of puzzle for use in manhattan distance calc.
         for(int i = 0; i < columnSize; i++) {
@@ -61,7 +63,7 @@ public class Node {
                 }
             }
         }
-        this.h = mDistance;
+        h = mDistance;
     }
 
     //checks to see if node is solvable
@@ -155,8 +157,7 @@ public class Node {
             child.parent = this;
 
             //A* Search Heuristic Function
-            calculateCost();
-            child.g = this.f;
+            child.g = calculateCost();
         }
 
     }
@@ -175,8 +176,7 @@ public class Node {
             child.parent = this;
 
             //A* Search Heuristic Function
-            calculateCost();
-            child.g = this.f;
+            child.g = calculateCost();
         }
 
     }
@@ -195,8 +195,7 @@ public class Node {
             child.parent = this;
 
             //A* Search Heuristic Function
-            calculateCost();
-            child.g = this.f;
+            child.g = calculateCost();
         }
     }
 
@@ -214,8 +213,7 @@ public class Node {
             child.parent = this;
 
             //A* Search Heuristic Function
-            calculateCost();
-            child.g = this.f;
+            child.g = calculateCost();
         }
     }
 

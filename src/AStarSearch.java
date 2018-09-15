@@ -1,4 +1,4 @@
-//TODO:Debug Me Please
+//TODO:Debug Me Please - Issue most likely related to Heuristic function calculations
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -29,21 +29,13 @@ public class AStarSearch {
 
             Node currentNode = null;
 
-            //gets the lowest costing node
+            //gets the lowest costing node from the frontier
             for(Node node : openList) {
                 if(node.f <= minInt) {
                     minInt = node.f;
                     currentNode = node;
                 }
             }
-
-            if(currentNode.h <= 0) {
-                goal = true;
-                pathTrace(pathToSolution, currentNode);
-                System.out.println();
-                System.out.println("Goal Found!");
-            }
-
 
             closedList.add(currentNode);
             openList.remove(currentNode);
@@ -66,7 +58,7 @@ public class AStarSearch {
                     System.out.println("Goal Found!");
                 }
 
-                //add the least cost child to the open list
+                //if not goal node and node has not been previously explored add to open list (frontier)
                 if(!Contains(openList, currentChild) && !Contains(closedList, currentChild)) {
                     openList.add(currentChild);
                     addedToFrontier++;
@@ -116,6 +108,7 @@ public class AStarSearch {
                 Collections.reverse(solution);
                 for (int i = 0; i < solution.size(); i++) {
                     solution.get(i).printPuzzle();
+                    System.out.println("Cost: " + solution.get(i).f);
                 }
             } else {
                 System.out.println();
