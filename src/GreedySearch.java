@@ -20,14 +20,18 @@ public class GreedySearch {
         int minInt = Integer.MAX_VALUE;
 
         boolean goal = false;
-        boolean solvable = root.solvable;
+        boolean solvable = root.isSolvable();
+
+        if(!solvable) {
+            return pathToSolution;
+        }
 
         openList.add(root);
         addedToFrontier++;
 
         Node currentNode = null;
 
-        while(!openList.isEmpty() && !goal && solvable) {
+        while(!openList.isEmpty() && !goal) {
 
             //gets the lowest costing node from the frontier
             for(Node node : openList) {

@@ -18,15 +18,18 @@ public class AStarSearch {
         int minInt = Integer.MAX_VALUE;
 
         boolean goal = false;
-        boolean solvable = root.solvable;
+        boolean solvable = root.isSolvable();
+
+        if(!solvable) {
+            return pathToSolution;
+        }
 
         openList.add(root);
         addedToFrontier++;
 
         Node currentNode = null;
 
-        //TODO Computations for f(g)
-        while(!openList.isEmpty() && !goal && solvable) {
+        while(!openList.isEmpty() && !goal) {
 
             //gets the lowest costing node from the frontier
             for(Node node : openList) {

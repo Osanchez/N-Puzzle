@@ -18,12 +18,16 @@ public class uninformedSearch {
         ArrayList closedList = new ArrayList();
 
         boolean goal = false;
-        boolean solvable = root.solvable;
+        boolean solvable = root.isSolvable();
+
+        if(!solvable) {
+            return pathToSolution;
+        }
 
         openList.add(root);
         addedToFrontier++;
 
-        while(!openList.isEmpty() && !goal && solvable) {
+        while(!openList.isEmpty() && !goal) {
             Node currentNode = openList.get(0);
             closedList.add(currentNode);
             openList.remove(0);
@@ -49,7 +53,6 @@ public class uninformedSearch {
 
             }
         }
-
         return pathToSolution;
     }
 

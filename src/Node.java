@@ -13,14 +13,13 @@ public class Node {
     public int[] puzzle;
     public int emptySpot;
     public int columnSize;
-    public boolean solvable;
 
     //greedy best first search
     //f(n) = h(n)
     //A* best first search
     //f(n) = g(n) + h(n)
     public int f;
-    public int h; //h = heuristics
+    public int h; //h = heuristics - manhattan distance;
     public int g; //g = cost from root node to current node
 
     public Node(int[] inputPuzzle) {
@@ -38,7 +37,6 @@ public class Node {
             throw new IllegalArgumentException("unrecognized number of puzzle pieces detected.");
         }
 
-        solvable = isSolvable();
         h = calculateManhattanDistance();
     }
 
@@ -120,53 +118,43 @@ public class Node {
     //checks to see if node is solvable
     //checks for duplicate values and skipped values
     public boolean isSolvable() {
-        solvable = true;
-        //creates an array and initializes all value to zero (values are 0 by default)
-        int[] puzzleCopy = new int[puzzle.length];
+        int inversions = 0;
 
-        //traverses puzzle and sets puzzleCopy[value returned] to a value of 1.
         for(int i = 0; i < puzzle.length; i++) {
-           puzzleCopy[puzzle[i]] = 1;
-        }
-
-        //if there are any 0's in the copy array than there are missing or duplicate values in the puzzle and it
-        //is not solvable
-        for(int i = 0; i < puzzle.length; i++) {
-            if(puzzleCopy[i] == 0) {
-                solvable = false;
+            for(int j = i + 1; j < puzzle.length; j++) {
+                if(puzzle[i] != 0 && puzzle[j] > puzzle[i]) { //do not include the inversions for puzzle piece 0
+                    inversions++;
+                }
             }
         }
 
-        //puzzle already solved because all indexes are set to 1
-        if(isGoalNode()) {
-            solvable = false;
+        if(inversions % 2 == 1){
+            return false;
+        }else{
+            return true;
         }
-
-        return solvable;
     }
 
     //Checks if goal node has been reached.
     public boolean isGoalNode() {
-        boolean isGoal = true;
         int m = puzzle[0];
 
         for(int i = 1; i < puzzle.length; i++) {
             if(m > puzzle[i]) {
-                isGoal = false;
+                return false;
             }
             m = puzzle[i];
         }
-        return isGoal;
+        return true;
     }
 
     public boolean isSamePuzzle(int[] currentPuzzle) {
-        boolean samePuzzle = true;
         for(int i = 0; i < puzzle.length; i++) {
             if(puzzle[i] != currentPuzzle[i]) {
-                samePuzzle = false;
+                return false;
             }
         }
-        return samePuzzle;
+        return true;
     }
 
     //copy puzzle - crates a copy of the current puzzle state
