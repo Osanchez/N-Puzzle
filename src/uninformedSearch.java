@@ -67,6 +67,7 @@ public class uninformedSearch {
         }
     }
 
+    //TODO: return before entire list loop is done.
     public static boolean Contains(ArrayList<Node> list, Node c) {
         boolean contains = false;
         for(int i = 0; i < list.size(); i++) {
