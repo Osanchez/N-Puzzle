@@ -103,7 +103,7 @@ public class GreedySearch {
 
         IOHandler io = new IOHandler();
         io.readFile(args[0]); //Command Line Input
-        //io.readFile("Files/boards.txt");
+        //io.readFile("Files/board.txt");
         ArrayList<int[]> boards = io.finalizedBoards;
 
         for (int[] board : boards) {

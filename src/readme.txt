@@ -18,6 +18,20 @@ A* always showed better performance metrics than breadth first search. A* had a 
 
 ● Instructions for running each program (a sample command line for each should suffice)
 
+-- Compile each class
+javac uninformedSearch.java
+javac AStarSearch.java
+javac Greedy Search.java
+
+--Running program
+java classname "path to puzzle.txt file"
+
+examples:
+java uninformedSearch "C:\Users\Omar\IdeaProjects\N-Puzzle\Files\boards.txt"
+java AStarSearch "C:\Users\Omar\IdeaProjects\N-Puzzle\Files\boards.txt"
+java Greedy "C:\Users\Omar\IdeaProjects\N-Puzzle\Files\boards.txt"
+
+
 Breadth First Search - java uninformedSearch.java "File Directory"
 A* - java AStarSearch.java "File Directory"
 Greedy Search - java GreedySearch.java "File Directory"
