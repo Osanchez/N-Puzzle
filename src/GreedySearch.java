@@ -1,6 +1,5 @@
 //TODO:Debug Me Please - Issue most likely related to Heuristic function calculations
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 public class GreedySearch {
 
@@ -14,8 +13,8 @@ public class GreedySearch {
     public ArrayList<Node> GreedySearch(Node root) {
 
         ArrayList pathToSolution = new ArrayList();
-        ArrayList<Node> openList = new ArrayList();
-        ArrayList closedList = new ArrayList();
+        LinkedHashMap<String, Node> openList = new LinkedHashMap<>();
+        LinkedHashMap<String, Node> closedList = new LinkedHashMap<>();
 
         int minInt = Integer.MAX_VALUE;
 
@@ -26,23 +25,25 @@ public class GreedySearch {
             return pathToSolution;
         }
 
-        openList.add(root);
+        openList.put(Arrays.toString(root.puzzle), root);
         addedToFrontier++;
 
         Node currentNode = null;
 
         while(!openList.isEmpty() && !goal) {
-
             //gets the lowest costing node from the frontier
-            for(Node node : openList) {
+            for(Node node : openList.values()) {
                 if(node.h <= minInt) {
                     minInt = node.h;
                     currentNode = node;
                 }
+                else {
+                    minInt = Integer.MAX_VALUE;
+                }
             }
 
-            openList.remove(currentNode);
-            closedList.add(currentNode);
+            closedList.put(Arrays.toString(currentNode.puzzle), currentNode);
+            openList.remove(Arrays.toString(currentNode.puzzle));
 
             //expand currentNode
             currentNode.expandMove();
@@ -62,8 +63,8 @@ public class GreedySearch {
                 }
 
                 //if not goal node and node has not been previously explored add to open list (frontier)
-                if(!Contains(openList, currentChild) && !Contains(closedList, currentChild)) {
-                    openList.add(currentChild);
+                if (!openList.containsKey(Arrays.toString(currentChild.puzzle)) && !closedList.containsKey(Arrays.toString(currentChild.puzzle))) {
+                    openList.put(Arrays.toString(currentChild.puzzle), currentChild);
                     addedToFrontier++;
                 }
             }
@@ -82,16 +83,6 @@ public class GreedySearch {
             current = current.parent;
             path.add(current);
         }
-    }
-
-    public static boolean Contains(ArrayList<Node> list, Node c) {
-        boolean contains = false;
-        for(int i = 0; i < list.size(); i++) {
-            if(list.get(i).isSamePuzzle(c.puzzle)) {
-                contains = true;
-            }
-        }
-        return contains;
     }
 
     public static void main(String[] args) {

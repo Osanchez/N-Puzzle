@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 public class AStarSearch {
     public int addedToFrontier = 0;
@@ -12,8 +11,8 @@ public class AStarSearch {
     public ArrayList<Node> AStarSearch(Node root) {
 
         ArrayList pathToSolution = new ArrayList();
-        ArrayList<Node> openList = new ArrayList();
-        ArrayList closedList = new ArrayList();
+        LinkedHashMap<String, Node> openList = new LinkedHashMap<>();
+        LinkedHashMap<String, Node> closedList = new LinkedHashMap<>();
 
         int minInt = Integer.MAX_VALUE;
 
@@ -24,32 +23,31 @@ public class AStarSearch {
             return pathToSolution;
         }
 
-        openList.add(root);
+        openList.put(Arrays.toString(root.puzzle), root);
         addedToFrontier++;
 
         Node currentNode = null;
 
         while(!openList.isEmpty() && !goal) {
 
-            //gets the lowest costing node from the frontier
-            for(Node node : openList) {
-                node.g = node.calculatePathCost(root.puzzle);
-                node.f = node.h + node.g;
+            for(Node node : openList.values()) {
+                node.calculatef(root.puzzle);
                 if(node.f <= minInt) {
                     minInt = node.f;
                     currentNode = node;
                 }
+                else {
+                    minInt = Integer.MAX_VALUE;
+                }
             }
 
-            openList.remove(currentNode);
-            closedList.add(currentNode);
+            openList.remove(Arrays.toString(currentNode.puzzle));
+            closedList.put(Arrays.toString(currentNode.puzzle), currentNode);
 
             //expand currentNode
             currentNode.expandMove();
             expandedFromFrontier++;
 
-            //TODO: Debug
-            //currentNode.printPuzzle();
 
             for(int i = 0; i < currentNode.children.size(); i++) {
                 Node currentChild = currentNode.children.get(i);
@@ -62,8 +60,8 @@ public class AStarSearch {
                 }
 
                 //if not goal node and node has not been previously explored add to open list (frontier)
-                if(!Contains(openList, currentChild) && !Contains(closedList, currentChild)) {
-                    openList.add(currentChild);
+                if (!openList.containsKey(Arrays.toString(currentChild.puzzle)) && !closedList.containsKey(Arrays.toString(currentChild.puzzle))) {
+                    openList.put(Arrays.toString(currentChild.puzzle), currentChild);
                     addedToFrontier++;
                 }
             }
@@ -82,16 +80,6 @@ public class AStarSearch {
             current = current.parent;
             path.add(current);
         }
-    }
-
-    public static boolean Contains(ArrayList<Node> list, Node c) {
-        boolean contains = false;
-        for(int i = 0; i < list.size(); i++) {
-            if(list.get(i).isSamePuzzle(c.puzzle)) {
-                contains = true;
-            }
-        }
-        return contains;
     }
 
     public static void main(String[] args) {

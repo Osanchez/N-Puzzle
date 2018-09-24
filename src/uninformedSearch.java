@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 //Breadth-First Search
 public class uninformedSearch {
@@ -14,8 +13,8 @@ public class uninformedSearch {
     public ArrayList<Node> breadthFirstSearch(Node root) {
 
         ArrayList pathToSolution = new ArrayList();
-        ArrayList<Node> openList = new ArrayList();
-        ArrayList closedList = new ArrayList();
+        LinkedHashMap<String, Node> openList = new LinkedHashMap<>();
+        LinkedHashMap<String, Node> closedList = new LinkedHashMap<>();
 
         boolean goal = false;
         boolean solvable = root.isSolvable();
@@ -24,13 +23,16 @@ public class uninformedSearch {
             return pathToSolution;
         }
 
-        openList.add(root);
+        openList.put(Arrays.toString(root.puzzle), root);
         addedToFrontier++;
 
         while(!openList.isEmpty() && !goal) {
-            Node currentNode = openList.get(0);
-            closedList.add(currentNode);
-            openList.remove(0);
+            Map.Entry<String, Node> entry = openList.entrySet().iterator().next();
+            String key = entry.getKey();
+            Node currentNode = openList.get(key);
+
+            closedList.put(Arrays.toString(currentNode.puzzle), currentNode);
+            openList.remove(Arrays.toString(currentNode.puzzle));
 
             currentNode.expandMove();
             expandedFromFrontier++;
@@ -46,8 +48,8 @@ public class uninformedSearch {
                     goal = true;
                     pathTrace(pathToSolution, currentChild);
                 }
-                if(!Contains(openList, currentChild) && !Contains(closedList, currentChild)) {
-                    openList.add(currentChild);
+                if (!openList.containsKey(Arrays.toString(currentChild.puzzle)) && !closedList.containsKey(Arrays.toString(currentChild.puzzle))) {
+                    openList.put(Arrays.toString(currentChild.puzzle), currentChild);
                     addedToFrontier++;
                 }
 
@@ -65,17 +67,6 @@ public class uninformedSearch {
             current = current.parent;
             path.add(current);
         }
-    }
-
-    //TODO: return before entire list loop is done.
-    public static boolean Contains(ArrayList<Node> list, Node c) {
-        boolean contains = false;
-        for(int i = 0; i < list.size(); i++) {
-            if(list.get(i).isSamePuzzle(c.puzzle)) {
-                contains = true;
-            }
-        }
-        return contains;
     }
 
     public static void main(String[] args) {

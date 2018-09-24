@@ -37,11 +37,17 @@ public class Node {
             throw new IllegalArgumentException("unrecognized number of puzzle pieces detected.");
         }
 
-        h = calculateManhattanDistance();
+        calculateManhattanDistance();
+    }
+
+    public void calculatef(int[] startPuzzle) {
+        calculatePathCost(startPuzzle);
+        f = g + h;
     }
 
     //calculates cost from start node to current node
-    public int calculatePathCost(int[] startPuzzle) {
+    public void calculatePathCost(int[] startPuzzle) {
+        //calculate g
         int cost = 0;
         int boardPiece = 0;
         int[] pCords = new int[2];
@@ -51,43 +57,45 @@ public class Node {
         int[][] childCopy = new int[columnSize][columnSize];//this.puzzle;
 
         if(isSamePuzzle(startPuzzle)) {
-            return cost;
-        }
+            //do nothing
+        } else {
 
-        //populates 2d boards with values of each puzzle
-        for(int i = 0; i < columnSize; i++) {
-            for(int j = 0; j < columnSize; j++) {
-                startCopy[i][j] = startPuzzle[boardPiece];
-                childCopy[i][j] = this.puzzle[boardPiece];
+            //populates 2d boards with values of each puzzle
+            for (int i = 0; i < columnSize; i++) {
+                for (int j = 0; j < columnSize; j++) {
+                    startCopy[i][j] = startPuzzle[boardPiece];
+                    childCopy[i][j] = this.puzzle[boardPiece];
+                    boardPiece++;
+                }
+            }
+
+            //cost calculation
+            while (boardPiece < this.puzzle.length) {
+                for (int x = 0; x < columnSize; x++) {
+                    for (int y = 0; y < columnSize; y++) {
+                        if (startCopy[x][y] == boardPiece) {
+                            pCords[0] = x;
+                            pCords[1] = y;
+                        }
+                        if (childCopy[x][y] == boardPiece) {
+                            cCords[0] = x;
+                            cCords[1] = y;
+                        }
+                    }
+                }
+                cost += Math.abs(pCords[0] - cCords[0]);
+                cost += Math.abs(pCords[1] - cCords[1]);
+
                 boardPiece++;
             }
         }
 
-        //cost calculation
-        while(boardPiece < this.puzzle.length) {
-         for(int x = 0; x < columnSize; x++) {
-             for(int y = 0; y < columnSize; y++) {
-                if(startCopy[x][y] == boardPiece) {
-                    pCords[0] = x;
-                    pCords[1] = y;
-                }
-                 if(childCopy[x][y] == boardPiece) {
-                     cCords[0] = x;
-                     cCords[1] = y;
-                 }
-             }
-         }
-            cost += Math.abs(pCords[0] - cCords[0]);
-            cost += Math.abs(pCords[1] - cCords[1]);
-
-            boardPiece++;
-        }
-
-        return cost;
+        g = cost;
     }
 
     //calculates manhattan Distance of current node
-    public int calculateManhattanDistance() {
+    public void calculateManhattanDistance() {
+        //calculate h
         int[][] copyBoard = new int[columnSize][columnSize];
         int[] goalState = new int[2];
 
@@ -112,7 +120,8 @@ public class Node {
                 }
             }
         }
-        return mDistance;
+
+        h = mDistance; //assign mDistance to current object
     }
 
     //checks to see if node is solvable
@@ -122,7 +131,7 @@ public class Node {
 
         for(int i = 0; i < puzzle.length; i++) {
             for(int j = i + 1; j < puzzle.length; j++) {
-                if(puzzle[i] != 0 && puzzle[j] > puzzle[i]) { //do not include the inversions for puzzle piece 0
+                if(puzzle[i] != 0 && puzzle[j] != 0 && puzzle[i] > puzzle[j]) { //do not include the inversions for puzzle piece 0
                     inversions++;
                 }
             }
